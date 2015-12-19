@@ -1,5 +1,5 @@
 ---
-title: "RA1_template.rmd"
+title: "PA1_template.rmd"
 author: "Shujuan Huang"
 date: "Friday, December 18, 2015"
 output: html_document
@@ -32,8 +32,10 @@ str(activity)
 3.Calculate and report the mean and median of the total number of steps taken per day
 
 ```{r, echo=TRUE}
-stepbydate <- setNames(aggregate(steps~as.Date(date), activity, sum, na.rm = TRUE), c("date","steps"))
-hist(stepbydate$steps, main="Histogram of total number of steps taken each day",xlab="Total number of steps taken each day",breaks=15)
+stepbydate <- setNames(aggregate(steps~as.Date(date), activity, sum, na.rm = TRUE),
+                       c("date","steps"))
+hist(stepbydate$steps, main="Histogram of total number of steps taken each day",
+     xlab="Total number of steps taken each day",breaks=15)
 paste("mean:", mean(stepbydate$steps))
 paste("median:", median(stepbydate$steps))
 ```
@@ -51,7 +53,8 @@ plot(stepbytime, type = "l", axes = F, xlab = "Time of the day",
      col = "blue")
 maxV <- which.max(stepbytime$steps)
 stepbytime[maxV,]
-axis(1,at=c(seq(0,2400,200),835), label = paste(c(seq(0,24,2),8),c(rep(":00",13),":40"),sep=""), pos = 0)
+axis(1,at=c(seq(0,2400,200),835), label = paste(c(seq(0,24,2),8),
+ c(rep(":00",13),":40"),sep=""), pos = 0)
 axis(2, at=c(seq(0,210,30),206.1698), label = c(seq(0,210,30),206.1698), pos = 0)
 segments(835, 0, 835, 206.1698, col = "red", lty = "dashed")
 text(835,200, "max number of steps: (835,206.1698)", col = "red", adj = c(-.1, -.1))
@@ -75,8 +78,10 @@ newdata<- activity
 newdata[is.na(activity$steps), ]$steps <- mean(activity$steps,na.rm=TRUE)
 # head(newdata)
 # head(activity)
-stepbydate2 <- setNames(aggregate(steps~as.Date(date), newdata, sum, na.rm = TRUE), c("date","steps"))
-hist(stepbydate2$steps, breaks=15,main="Histogram of imputed total number of steps taken each day",xlab="Imputed Total number of steps taken each day")
+stepbydate2 <- setNames(aggregate(steps~as.Date(date), newdata, sum, na.rm = TRUE), 
+                        c("date","steps"))
+hist(stepbydate2$steps, breaks=15,main="Histogram of imputed total number of steps 
+     taken each day",     xlab="Imputed Total number of steps taken each day")
 mean(stepbydate2$steps)
 summary(stepbydate2$steps)
 paste("mean:", mean(stepbydate2$steps))
